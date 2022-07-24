@@ -1,32 +1,30 @@
-# Prerequisites
-*.d
+#include <Windows.h>
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 1920
 
-# Precompiled Headers
-*.gch
-*.pch
+HICON icons[] = {
+	LoadIcon(NULL, IDI_ERROR),
+	LoadIcon(NULL, IDI_WARNING),
+	LoadIcon(NULL, IDI_INFORMATION),
+	LoadIcon(NULL, IDI_QUESTION)
+};
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+size_t s_icons = sizeof(icons);
 
-# Fortran module files
-*.mod
-*.smod
+void DrawIcons() {
+	HWND hWnd = GetDesktopWindow();
+	HDC hdc = GetWindowDC(hWnd);
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+	DrawIcon(hdc, rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, icons[rand() % s_icons]);
 
-# Executables
-*.exe
-*.out
-*.app
+	ReleaseDC(hWnd, hdc);
+}
+
+int main() {
+
+	while (1) {
+		DrawIcons();
+	}
+	return 0;
+}
